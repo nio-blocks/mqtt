@@ -9,7 +9,7 @@
     ],
     "Properties": {
       "client_id": {
-        "description": "Specfic client to use for communication"
+        "description": "Unique client id used to connect to broker"
       },
       "topic": {
         "description": "Topic for communicating messages"
