@@ -1,7 +1,7 @@
-Example
+MQTT Block
 ===========
 
-What does this block do?
+Uses n.io platform to create publish/subscribe messaging with the MQTT protocol
 
 Properties
 --------------
