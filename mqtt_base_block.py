@@ -31,6 +31,7 @@ class MqttBase(Block):
         self.logger.debug("Connecting...")
         self._client.on_connect = self._on_connect
         self._client.connect(self.host(), self.port())
+        self._client.loop_start()
 
     def _on_connect(self, client, userdata, rc):
         self.logger.debug("Connected with result code {}".format(

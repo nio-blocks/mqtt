@@ -16,7 +16,6 @@ class MqttSubscribe(MqttBase):
     def start(self):
         super().start()
         self._client.subscribe(self.topic())
-        self._client.loop_start()
 
     def _on_message(self, client, userdata, message):
         self.logger.debug("Received message from client '{}' on topic '{}'. "
