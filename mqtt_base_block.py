@@ -1,8 +1,8 @@
+import paho.mqtt.client as mqtt
+
 from nio.block.base import Block
 from nio.properties import VersionProperty, StringProperty, IntProperty
 from nio.util.discovery import not_discoverable
-
-import paho.mqtt.client as mqtt
 
 
 @not_discoverable
@@ -15,29 +15,29 @@ class MqttBase(Block):
     topic = StringProperty(title="Topic", default="", allow_none=False)
 
     def __init__(self):
-        self.client = mqtt
         super().__init__()
+        self._client = None
 
     def configure(self, context):
         super().configure(context)
-        self.client = mqtt.Client(self.client_id())
-        self.connect()
-        self.client.loop_start()
+        self._client = mqtt.Client(self.client_id())
+        self._connect()
 
     def stop(self):
-        self.disconnect()
+        self._disconnect()
         super().stop()
 
-    def connect(self):
+    def _connect(self):
         self.logger.debug("Connecting...")
-        self.client.connect(self.host(), self.port())
-        self.client.on_connect = self.on_connect
-        # ^ will this work if on_connect is only defined in the sub/pub blocks?
+        self._client.on_connect = self._on_connect
+        self._client.connect(self.host(), self.port())
+        self._client.loop_start()
 
-    def on_connect(self, client, userdata, rc):
-        self.logger.debug("Connected with result code {}".format(self.client.connack_string(rc)))
+    def _on_connect(self, client, userdata, rc):
+        self.logger.debug("Connected with result code {}".format(
+            self._client.str(rc)))
 
-    def disconnect(self):
+    def _disconnect(self):
         self.logger.debug("Disconnecting...")
-        self.client.loop_stop()
-        self.client.disconnect()
+        self._client.loop_stop()
+        self._client.disconnect()

@@ -1,7 +1,6 @@
 from nio.properties import VersionProperty
 from nio.util.discovery import discoverable
 from nio.signal.base import Signal
-
 from .mqtt_base_block import MqttBase
 
 
@@ -12,10 +11,13 @@ class MqttSubscribe(MqttBase):
 
     def configure(self, context):
         super().configure(context)
-        self.client.subscribe(self.topic())
-        self.client.on_message = self.on_message
+        self._client.on_message = self._on_message
 
-    def on_message(self, client, userdata, message):
+    def start(self):
+        super().start()
+        self._client.subscribe(self.topic())
+
+    def _on_message(self, client, userdata, message):
         self.logger.debug("Received message from client '{}' on topic '{}'. "
                           "{}".format(client, message.topic, message.payload))
         self.notify_signals([Signal({"client": client,
@@ -23,7 +25,6 @@ class MqttSubscribe(MqttBase):
                                      "payload": message.payload,
                                      "topic": message.topic})])
 
-
     def stop(self):
-        self.client.unsubscribe(self.topic())
+        self._client.unsubscribe(self.topic())
         super().stop()
