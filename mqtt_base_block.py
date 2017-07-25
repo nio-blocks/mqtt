@@ -15,8 +15,8 @@ class MqttBase(Block):
     topic = StringProperty(title="Topic", default="", allow_none=False)
 
     def __init__(self):
-        self.client = mqtt
         super().__init__()
+        self.client = None
 
     def configure(self, context):
         super().configure(context)
@@ -30,9 +30,8 @@ class MqttBase(Block):
 
     def connect(self):
         self.logger.debug("Connecting...")
-        self.client.connect(self.host(), self.port())
         self.client.on_connect = self.on_connect
-        # ^ will this work if on_connect is only defined in the sub/pub blocks?
+        self.client.connect(self.host(), self.port())
 
     def on_connect(self, client, userdata, rc):
         self.logger.debug("Connected with result code {}".format(self.client.connack_string(rc)))

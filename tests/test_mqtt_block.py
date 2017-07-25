@@ -1,19 +1,75 @@
+from unittest.mock import patch, MagicMock
 from nio.block.terminals import DEFAULT_TERMINAL
 from nio.signal.base import Signal
 from nio.testing.block_test_case import NIOBlockTestCase
-from ..example_block import Example
+from ..mqtt_publish_block import MqttPublish
+from ..mqtt_subscribe_block import MqttSubscribe
 
+import paho.mqtt.client as mqtt
 
-class TestExample(NIOBlockTestCase):
+class TestMqtt(NIOBlockTestCase):
 
-    def test_process_signals(self):
-        """Signals pass through block unmodified."""
-        blk = Example()
-        self.configure_block(blk, {})
-        blk.start()
-        blk.process_signals([Signal({"hello": "n.io"})])
-        blk.stop()
+    def test_mqtt_subscribe(self):
+        """Test that block is configured/connected correctly and that it
+        outputs the correct signal"""
+        blk = MqttSubscribe()
+        with patch('blocks.mqtt.mqtt_base_block.mqtt') as patched_mqtt:
+            mock_client = MagicMock(spec=mqtt.Client)
+            patched_mqtt.Client.return_value = mock_client
+            self.configure_block(blk, {
+                "client_id": "clientID",
+                "topic": "mqttTopic",
+                "host": "testlocalhost",
+                "port": 0000,
+            })
+            mock_client.connect.assert_called_once_with("testlocalhost", 0000)
+            mock_client.loop_start.assert_called_once_with()
+            blk.start()
+            mock_client.subscribe.assert_called_once_with("mqttTopic")
+
+            # Simulate message being received
+            client = "mqttClient"
+            userdata = "userData"
+            message = MagicMock()
+            message.topic = "mqttTopic"
+            message.payload = "mqttMsg"
+            mock_client.on_message(client, userdata, message)
+
+            blk.stop()
+            mock_client.loop_stop.assert_called_once_with()
+            mock_client.disconnect.assert_called_once_with()
         self.assert_num_signals_notified(1)
         self.assertDictEqual(
             self.last_notified[DEFAULT_TERMINAL][0].to_dict(),
-            {"hello": "n.io"})
+            {
+                "client": "mqttClient",
+                "userdata": "userData",
+                "payload": "mqttMsg",
+                "topic": "mqttTopic",
+            })
+
+    def test_mqtt_publish(self):
+        """Test that block is configured/connected correctly and that it
+        publishes as desired"""
+        blk = MqttPublish()
+        with patch('blocks.mqtt.mqtt_base_block.mqtt') as patched_mqtt:
+            mock_client = MagicMock(spec=mqtt.Client)
+            patched_mqtt.Client.return_value = mock_client
+            self.configure_block(blk, {
+                "client_id": "clientID",
+                "topic": "mqttTopic",
+                "host": "testlocalhost",
+                "port": 0000,
+            })
+            mock_client.connect.assert_called_once_with("testlocalhost", 0000)
+            mock_client.loop_start.assert_called_once_with()
+            blk.start()
+
+            signal_to_publish = [Signal({"test": "testt", "testtt": 1})]
+            blk.process_signals(signal_to_publish)
+            mock_client.publish.assert_called_once_with(
+                "mqttTopic", signal_to_publish[0].to_dict())
+
+            blk.stop()
+            mock_client.loop_stop.assert_called_once_with()
+            mock_client.disconnect.assert_called_once_with()
