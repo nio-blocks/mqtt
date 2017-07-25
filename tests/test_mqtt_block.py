@@ -24,8 +24,8 @@ class TestMqtt(NIOBlockTestCase):
                 "port": 0000,
             })
             mock_client.connect.assert_called_once_with("testlocalhost", 0000)
-            mock_client.loop_start.assert_called_once_with()
             blk.start()
+            mock_client.loop_start.assert_called_once_with()
             mock_client.subscribe.assert_called_once_with("mqttTopic")
 
             # Simulate message being received
@@ -62,8 +62,8 @@ class TestMqtt(NIOBlockTestCase):
                 "port": 0000,
             })
             mock_client.connect.assert_called_once_with("testlocalhost", 0000)
-            mock_client.loop_start.assert_called_once_with()
             blk.start()
+            mock_client.loop_start.assert_called_once_with()
 
             signal_to_publish = [Signal({"test": "testt", "testtt": 1})]
             blk.process_signals(signal_to_publish)

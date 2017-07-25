@@ -1,8 +1,8 @@
+import paho.mqtt.client as mqtt
+
 from nio.block.base import Block
 from nio.properties import VersionProperty, StringProperty, IntProperty
 from nio.util.discovery import not_discoverable
-
-import paho.mqtt.client as mqtt
 
 
 @not_discoverable
@@ -29,8 +29,8 @@ class MqttBase(Block):
 
     def _connect(self):
         self.logger.debug("Connecting...")
-        self.client.on_connect = self._on_connect
-        self.client.connect(self.host(), self.port())
+        self._client.on_connect = self._on_connect
+        self._client.connect(self.host(), self.port())
 
     def _on_connect(self, client, userdata, rc):
         self.logger.debug("Connected with result code {}".format(
@@ -38,5 +38,5 @@ class MqttBase(Block):
 
     def _disconnect(self):
         self.logger.debug("Disconnecting...")
-        self.client.loop_stop()
-        self.client.disconnect()
+        self._client.loop_stop()
+        self._client.disconnect()

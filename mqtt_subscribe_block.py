@@ -1,7 +1,6 @@
 from nio.properties import VersionProperty
 from nio.util.discovery import discoverable
 from nio.signal.base import Signal
-
 from .mqtt_base_block import MqttBase
 
 
