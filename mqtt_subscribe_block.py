@@ -25,7 +25,6 @@ class MqttSubscribe(MqttBase):
                                      "payload": message.payload,
                                      "topic": message.topic})])
 
-
     def stop(self):
         self._client.unsubscribe(self.topic())
         super().stop()
