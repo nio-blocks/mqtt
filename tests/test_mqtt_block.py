@@ -5,6 +5,7 @@ import paho.mqtt.client as mqtt
 from nio.block.terminals import DEFAULT_TERMINAL
 from nio.signal.base import Signal
 from nio.testing.block_test_case import NIOBlockTestCase
+from ..mqtt_base_block import MqttBase
 from ..mqtt_publish_block import MqttPublish
 from ..mqtt_subscribe_block import MqttSubscribe
 
@@ -14,7 +15,7 @@ class TestMqtt(NIOBlockTestCase):
     def test_mqtt_subscribe(self):
         """Block notifies proper signal when message is received"""
         blk = MqttSubscribe()
-        with patch('blocks.mqtt.mqtt_base_block.mqtt') as patched_mqtt:
+        with patch(MqttBase.__module__ + '.mqtt') as patched_mqtt:
             mock_client = MagicMock(spec=mqtt.Client)
             patched_mqtt.Client.return_value = mock_client
             self.configure_block(blk, {
@@ -52,7 +53,7 @@ class TestMqtt(NIOBlockTestCase):
     def test_mqtt_publish(self):
         """Block publishes signals that are processed"""
         blk = MqttPublish()
-        with patch('blocks.mqtt.mqtt_base_block.mqtt') as patched_mqtt:
+        with patch(MqttBase.__module__ + '.mqtt') as patched_mqtt:
             mock_client = MagicMock(spec=mqtt.Client)
             patched_mqtt.Client.return_value = mock_client
             self.configure_block(blk, {
