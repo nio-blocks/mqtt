@@ -16,27 +16,27 @@ class MqttBase(Block):
 
     def __init__(self):
         super().__init__()
-        self.client = None
+        self._client = None
 
     def configure(self, context):
         super().configure(context)
-        self.client = mqtt.Client(self.client_id())
-        self.connect()
-        self.client.loop_start()
+        self._client = mqtt.Client(self.client_id())
+        self._connect()
 
     def stop(self):
-        self.disconnect()
+        self._disconnect()
         super().stop()
 
-    def connect(self):
+    def _connect(self):
         self.logger.debug("Connecting...")
-        self.client.on_connect = self.on_connect
+        self.client.on_connect = self._on_connect
         self.client.connect(self.host(), self.port())
 
-    def on_connect(self, client, userdata, rc):
-        self.logger.debug("Connected with result code {}".format(self.client.connack_string(rc)))
+    def _on_connect(self, client, userdata, rc):
+        self.logger.debug("Connected with result code {}".format(
+            self._client.str(rc)))
 
-    def disconnect(self):
+    def _disconnect(self):
         self.logger.debug("Disconnecting...")
         self.client.loop_stop()
         self.client.disconnect()

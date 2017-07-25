@@ -1,17 +1,18 @@
 from unittest.mock import patch, MagicMock
+
+import paho.mqtt.client as mqtt
+
 from nio.block.terminals import DEFAULT_TERMINAL
 from nio.signal.base import Signal
 from nio.testing.block_test_case import NIOBlockTestCase
 from ..mqtt_publish_block import MqttPublish
 from ..mqtt_subscribe_block import MqttSubscribe
 
-import paho.mqtt.client as mqtt
 
 class TestMqtt(NIOBlockTestCase):
 
     def test_mqtt_subscribe(self):
-        """Test that block is configured/connected correctly and that it
-        outputs the correct signal"""
+        """Block notifies proper signal when message is received"""
         blk = MqttSubscribe()
         with patch('blocks.mqtt.mqtt_base_block.mqtt') as patched_mqtt:
             mock_client = MagicMock(spec=mqtt.Client)
@@ -49,8 +50,7 @@ class TestMqtt(NIOBlockTestCase):
             })
 
     def test_mqtt_publish(self):
-        """Test that block is configured/connected correctly and that it
-        publishes as desired"""
+        """Block publishes signals that are processed"""
         blk = MqttPublish()
         with patch('blocks.mqtt.mqtt_base_block.mqtt') as patched_mqtt:
             mock_client = MagicMock(spec=mqtt.Client)
