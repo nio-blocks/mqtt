@@ -1,25 +1,10 @@
 {
   "nio/mqtt": {
-    "Version": "0.1.0",
-    "Description": "Creates publish/subscribe messaging with the MQTT protocol.",
-    "Output": "Description of block output(s).",
-    "Input": "Description of block input(s).",
-    "Dependencies": [
-      "paho-mqtt"
-    ],
-    "Properties": {
-      "client_id": {
-        "description": "Unique client id used to connect to broker"
-      },
-      "topic": {
-        "description": "Topic for communicating messages"
-      },
-      "port": {
-        "description": "The network port of the server host to connect to"
-      },
-      "host": {
-        "description": "The hostname or IP address of the remote broker"
-      }
-    }
+    "version": "0.0.1",
+    "description": "",
+    "inputs": {},
+    "outputs": {},
+    "properties": {},
+    "commands": {}
   }
 }

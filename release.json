@@ -1,7 +1,7 @@
 {
   "nio/mqtt": {
-    "Language": "Python",
-    "Reference": "github.com/nio-blocks/mqtt@v1.0.0",
-    "Version": "0.1.0"
+    "language": "Python",
+    "version": "0.0.1",
+    "reference": "github.com/nio-blocks/mqtt@v0.0.1"
   }
 }
