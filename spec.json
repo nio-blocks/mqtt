@@ -1,10 +1,76 @@
 {
-  "nio/mqtt": {
-    "version": "0.0.1",
-    "description": "",
-    "inputs": {},
+  "nio/MqttPublish": {
+    "version": "0.1.0",
+    "description": "Publish messages with the MQTT protocol",
+    "properties": {
+      "client_id": {
+        "title": "Client ID",
+        "type": "StringType",
+        "description": "Unique client id used to connect to broker",
+        "default": ""
+      },
+      "host": {
+        "title": "Host",
+        "type": "StringType",
+        "description": "The hostname or IP address of the remote broker",
+        "default": "localhost"
+      },
+      "port": {
+        "title": "Port",
+        "type": "IntType",
+        "description": "The network port of the server host to connect to",
+        "default": 1883
+      },
+      "topic": {
+        "title": "Topic",
+        "type": "StringType",
+        "description": "Topic for publishing messages",
+        "default": ""
+      }
+    },
+    "inputs": {
+      "default": {
+        "description": "List of signals containing the message to be published"
+      }
+    },
     "outputs": {},
-    "properties": {},
+    "commands": {}
+  },
+  "nio/MqttSubscribe": {
+    "version": "0.1.0",
+    "description": "Subscribe to messages in an MQTT system",
+    "properties": {
+      "client_id": {
+        "title": "Client ID",
+        "type": "StringType",
+        "description": "Unique client id used to connect to broker",
+        "default": ""
+      },
+      "host": {
+        "title": "Host",
+        "type": "StringType",
+        "description": "The hostname or IP address of the remote broker",
+        "default": "localhost"
+      },
+      "port": {
+        "title": "Port",
+        "type": "IntType",
+        "description": "The network port of the server host to connect to",
+        "default": 1883
+      },
+      "topic": {
+        "title": "Topic",
+        "type": "StringType",
+        "description": "Topic to subscribe to for messages",
+        "default": ""
+      }
+    },
+    "inputs": {},
+    "outputs": {
+      "default": {
+        "description": "Signal containing the message from MQTT"
+      }
+    },
     "commands": {}
   }
 }

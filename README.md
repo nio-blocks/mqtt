@@ -1,38 +1,54 @@
-MQTT Block
+MqttPublish
 ===========
-
-Uses n.io platform to create publish/subscribe messaging with the MQTT protocol
+Publish messages with the MQTT protocol
 
 Properties
---------------
-**Client ID**(string): Unique client id used to connect to broker
+----------
+- **client_id**: Unique client id used to connect to broker
+- **host**: The hostname or IP address of the remote broker
+- **port**: The network port of the server host to connect to
+- **topic**: Topic for publishing messages
 
-**Topic**(string): Topic for communicating messages
+Inputs
+------
+- **default**: List of signals containing the message to be published
 
-**Port**(integer): The network port of the server host to connect to
+Outputs
+-------
+None
 
-**Host**(string): The hostname or IP address of the remote broker
+Commands
+--------
+None
 
 Dependencies
-----------------
+------------
 paho-mqtt
 
-Input
+
+MqttSubscribe
+=============
+Subscribe to messages in an MQTT system
+
+Properties
+----------
+- **client_id**: Unique client id used to connect to broker
+- **host**: The hostname or IP address of the remote broker
+- **port**: The network port of the server host to connect to
+- **topic**: Topic to subscribe to for messages
+
+Inputs
+------
+None
+
+Outputs
 -------
-**Publisher**
+- **default**: Signal containing the message from MQTT
 
-List of signals containing the message to be published.
-
-**Subscriber**
-
+Commands
+--------
 None
 
-Output
----------
-**Publisher**
-
-None
-
-**Subscriber**
-
-Signal containing the message from MQTT.
+Dependencies
+------------
+paho-mqtt

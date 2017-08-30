@@ -1,10 +1,10 @@
 from unittest.mock import patch, MagicMock
-
 import paho.mqtt.client as mqtt
 
 from nio.block.terminals import DEFAULT_TERMINAL
 from nio.signal.base import Signal
 from nio.testing.block_test_case import NIOBlockTestCase
+
 from ..mqtt_base_block import MqttBase
 from ..mqtt_publish_block import MqttPublish
 from ..mqtt_subscribe_block import MqttSubscribe

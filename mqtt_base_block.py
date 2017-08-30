@@ -1,14 +1,12 @@
 import paho.mqtt.client as mqtt
 
-from nio.block.base import Block
-from nio.properties import VersionProperty, StringProperty, IntProperty
+from nio.properties import StringProperty, IntProperty
 from nio.util.discovery import not_discoverable
 
 
 @not_discoverable
-class MqttBase(Block):
+class MqttBase(object):
 
-    version = VersionProperty('0.1.0')
     client_id = StringProperty(title="Client ID", default="", allow_none=False)
     port = IntProperty(title="Port", default=1883, allow_none=False)
     host = StringProperty(title="Host", default="localhost", allow_none=False)
