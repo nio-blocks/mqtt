@@ -2,6 +2,9 @@
   "nio/MqttPublish": {
     "version": "0.1.0",
     "description": "Publish messages with the MQTT protocol",
+    "categories": [
+      "Communication"
+    ],
     "properties": {
       "client_id": {
         "title": "Client ID",
@@ -39,6 +42,9 @@
   "nio/MqttSubscribe": {
     "version": "0.1.0",
     "description": "Subscribe to messages in an MQTT system",
+    "categories": [
+      "Communication"
+    ],
     "properties": {
       "client_id": {
         "title": "Client ID",
