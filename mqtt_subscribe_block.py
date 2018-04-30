@@ -15,7 +15,7 @@ class MqttSubscribe(MqttBase, GeneratorBlock):
 
     def start(self):
         super().start()
-        self._client.subscribe(self.topic())
+        self._client.subscribe(self.client_config().topic())
 
     def _on_message(self, client, userdata, message):
         self.logger.debug("Received message from client '{}' on topic '{}'. "
@@ -26,5 +26,5 @@ class MqttSubscribe(MqttBase, GeneratorBlock):
                                      "topic": message.topic})])
 
     def stop(self):
-        self._client.unsubscribe(self.topic())
+        self._client.unsubscribe(self.client_config().topic())
         super().stop()

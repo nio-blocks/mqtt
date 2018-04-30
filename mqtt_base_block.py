@@ -9,13 +9,17 @@ class AuthCreds(PropertyHolder):
     access_key = StringProperty(title="Access Key", default="")
 
 
-@not_discoverable
-class MqttBase(object):
-
+class ClientConfig(PropertyHolder):
     client_id = StringProperty(title="Client ID", default="", allow_none=False)
     port = IntProperty(title="Port", default=1883, allow_none=False)
     host = StringProperty(title="Host", default="localhost", allow_none=False)
     topic = StringProperty(title="Topic", default="", allow_none=True)
+
+
+@not_discoverable
+class MqttBase(object):
+
+    client_config = ObjectProperty(ClientConfig, title="MQTT Client Configuration", default=ClientConfig())
     creds = ObjectProperty(AuthCreds, title="Authorization Creds", default=AuthCreds())
 
     def __init__(self):
@@ -24,7 +28,7 @@ class MqttBase(object):
 
     def configure(self, context):
         super().configure(context)
-        self._client = mqtt.Client(self.client_id())
+        self._client = mqtt.Client(self.client_config().client_id())
         self._connect()
 
     def stop(self):
@@ -35,7 +39,7 @@ class MqttBase(object):
         self.logger.debug("Connecting...")
         self._client.on_connect = self._on_connect
         self._client.username_pw_set(self.creds().app_id(), self.creds().access_key())
-        self._client.connect(self.host(), self.port())
+        self._client.connect(self.client_config().host(), self.client_config().port())
         self._client.loop_start()
 
     def _on_connect(self, client, userdata, flags, rc):
