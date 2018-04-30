@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 
-from nio.properties import StringProperty, IntProperty, ObjectProperty, PropertyHolder
+from nio.properties import StringProperty, IntProperty, \
+                           ObjectProperty, PropertyHolder
 from nio.util.discovery import not_discoverable
 
 
@@ -19,8 +20,10 @@ class ClientConfig(PropertyHolder):
 @not_discoverable
 class MqttBase(object):
 
-    client_config = ObjectProperty(ClientConfig, title="MQTT Client Configuration", default=ClientConfig())
-    creds = ObjectProperty(AuthCreds, title="Authorization Creds", default=AuthCreds())
+    client_config = ObjectProperty(ClientConfig,
+                           title="MQTT Client Config", default=ClientConfig())
+    creds = ObjectProperty(AuthCreds,
+                           title="Authorization Creds", default=AuthCreds())
 
     def __init__(self):
         super().__init__()
@@ -38,8 +41,10 @@ class MqttBase(object):
     def _connect(self):
         self.logger.debug("Connecting...")
         self._client.on_connect = self._on_connect
-        self._client.username_pw_set(self.creds().app_id(), self.creds().access_key())
-        self._client.connect(self.client_config().host(), self.client_config().port())
+        self._client.username_pw_set(self.creds().app_id(),
+                                     self.creds().access_key())
+        self._client.connect(self.client_config().host(),
+                             self.client_config().port())
         self._client.loop_start()
 
     def _on_connect(self, client, userdata, flags, rc):

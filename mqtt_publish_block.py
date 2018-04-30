@@ -11,5 +11,7 @@ class MqttPublish(MqttBase, TerminatorBlock):
     def process_signals(self, signals):
         for signal in signals:
             self.logger.debug("Publishing signal to topic '{}': {}"
-                              .format(self.client_config().topic(), signal.to_dict()))
-            self._client.publish(self.client_config().topic(), signal.to_dict())
+                              .format(self.client_config().topic(),
+                                      signal.to_dict()))
+            self._client.publish(self.client_config().topic(),
+                                 signal.to_dict())
