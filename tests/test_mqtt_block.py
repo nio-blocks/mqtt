@@ -19,10 +19,11 @@ class TestMqtt(NIOBlockTestCase):
             mock_client = MagicMock(spec=mqtt.Client)
             patched_mqtt.Client.return_value = mock_client
             self.configure_block(blk, {
-                "client_id": "clientID",
-                "topic": "mqttTopic",
-                "host": "testlocalhost",
-                "port": 0000,
+                "client_config": {
+                        "client_id": "clientID",
+                        "topic": "mqttTopic",
+                        "host": "testlocalhost",
+                        "port": 0000},
                 "creds": {"app_id": "dsv",
                           "access_key": "7Q2Q3Q"}
             })
@@ -60,10 +61,13 @@ class TestMqtt(NIOBlockTestCase):
             mock_client = MagicMock(spec=mqtt.Client)
             patched_mqtt.Client.return_value = mock_client
             self.configure_block(blk, {
-                "client_id": "clientID",
-                "topic": "mqttTopic",
-                "host": "testlocalhost",
-                "port": 0000,
+                "client_config": {
+                        "client_id": "clientID",
+                        "topic": "mqttTopic",
+                        "host": "testlocalhost",
+                        "port": 0000},
+                "creds": {"app_id": "dsv",
+                          "access_key": "7Q2Q3Q"}
             })
             mock_client.connect.assert_called_once_with("testlocalhost", 0000)
             blk.start()
