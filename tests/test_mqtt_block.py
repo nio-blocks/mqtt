@@ -23,7 +23,10 @@ class TestMqtt(NIOBlockTestCase):
                 "topic": "mqttTopic",
                 "host": "testlocalhost",
                 "port": 0000,
+                "app_id": "dsv",
+                "access_key": "7Q2Q3Q"
             })
+            mock_client.username_pw_set.assert_called_once_with("dsv", "7Q2Q3Q")
             mock_client.connect.assert_called_once_with("testlocalhost", 0000)
             blk.start()
             mock_client.loop_start.assert_called_once_with()
