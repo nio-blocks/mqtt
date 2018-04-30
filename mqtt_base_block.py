@@ -1,7 +1,12 @@
 import paho.mqtt.client as mqtt
 
-from nio.properties import StringProperty, IntProperty
+from nio.properties import StringProperty, IntProperty, ObjectProperty, PropertyHolder
 from nio.util.discovery import not_discoverable
+
+
+class AuthCreds(PropertyHolder):
+    app_id = StringProperty(title="Application ID", default="")
+    access_key = StringProperty(title="Access Key", default="")
 
 
 @not_discoverable
@@ -11,8 +16,7 @@ class MqttBase(object):
     port = IntProperty(title="Port", default=1883, allow_none=False)
     host = StringProperty(title="Host", default="localhost", allow_none=False)
     topic = StringProperty(title="Topic", default="", allow_none=True)
-    app_id = StringProperty(title="Application ID", default="")
-    access_key = StringProperty(title="Access Key", default="")
+    creds = ObjectProperty(AuthCreds, title="Authorization Creds", default=AuthCreds())
 
     def __init__(self):
         super().__init__()
@@ -30,7 +34,7 @@ class MqttBase(object):
     def _connect(self):
         self.logger.debug("Connecting...")
         self._client.on_connect = self._on_connect
-        self._client.username_pw_set(self.app_id(), self.access_key())
+        self._client.username_pw_set(self.creds().app_id(), self.creds().access_key())
         self._client.connect(self.host(), self.port())
         self._client.loop_start()
 
