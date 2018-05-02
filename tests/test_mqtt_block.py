@@ -1,5 +1,6 @@
 from unittest.mock import patch, MagicMock
 import paho.mqtt.client as mqtt
+import json
 
 from nio.block.terminals import DEFAULT_TERMINAL
 from nio.signal.base import Signal
@@ -76,7 +77,7 @@ class TestMqtt(NIOBlockTestCase):
             signal_to_publish = [Signal({"test": "testt", "testtt": 1})]
             blk.process_signals(signal_to_publish)
             mock_client.publish.assert_called_once_with(
-                "mqttTopic", signal_to_publish[0].to_dict())
+                "mqttTopic", json.dumps(signal_to_publish[0].to_dict()))
 
             blk.stop()
             mock_client.loop_stop.assert_called_once_with()
