@@ -1,5 +1,6 @@
 from nio import TerminatorBlock
 from nio.properties import VersionProperty
+import json
 
 from .mqtt_base_block import MqttBase
 
@@ -14,4 +15,4 @@ class MqttPublish(MqttBase, TerminatorBlock):
                               .format(self.client_config().topic(),
                                       signal.to_dict()))
             self._client.publish(self.client_config().topic(),
-                                 signal.to_dict())
+                                 json.dumps(signal.to_dict()))
