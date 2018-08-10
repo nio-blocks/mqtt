@@ -6,29 +6,25 @@
       "Communication"
     ],
     "properties": {
-      "client_id": {
-        "title": "Client ID",
-        "type": "StringType",
-        "description": "Unique client id used to connect to broker.",
-        "default": ""
+      "client_config": {
+        "title": "MQTT Client Config",
+        "type": "ObjectType",
+        "description": "Client ID, host, and port for the MQTT Client.",
+        "default": {
+          "client_id": "",
+          "port": 1883,
+          "host": "localhost",
+          "topic": ""
+        }
       },
-      "host": {
-        "title": "Host",
-        "type": "StringType",
-        "description": "The hostname or IP address of the remote broker.",
-        "default": "localhost"
-      },
-      "port": {
-        "title": "Port",
-        "type": "IntType",
-        "description": "The network port of the server host to connect to.",
-        "default": 1883
-      },
-      "topic": {
-        "title": "Topic",
-        "type": "StringType",
-        "description": "Topic for publishing messages.",
-        "default": ""
+      "creds": {
+        "title": "Authorization Creds",
+        "type": "ObjectType",
+        "description": "Application ID and Access Key for the MQTT Client.",
+        "default": {
+          "app_id": "",
+          "access_key": ""
+        }
       }
     },
     "inputs": {
@@ -46,29 +42,25 @@
       "Communication"
     ],
     "properties": {
-      "client_id": {
-        "title": "Client ID",
-        "type": "StringType",
-        "description": "Unique client id used to connect to broker.",
-        "default": ""
+      "client_config": {
+        "title": "MQTT Client Config",
+        "type": "ObjectType",
+        "description": "Client ID, host, and port for the MQTT Client.",
+        "default": {
+          "client_id": "",
+          "port": 1883,
+          "host": "localhost",
+          "topic": ""
+        }
       },
-      "host": {
-        "title": "Host",
-        "type": "StringType",
-        "description": "The hostname or IP address of the remote broker.",
-        "default": "localhost"
-      },
-      "port": {
-        "title": "Port",
-        "type": "IntType",
-        "description": "The network port of the server host to connect to.",
-        "default": 1883
-      },
-      "topic": {
-        "title": "Topic",
-        "type": "StringType",
-        "description": "Topic to subscribe to for messages.",
-        "default": ""
+      "creds": {
+        "title": "Authorization Creds",
+        "type": "ObjectType",
+        "description": "Application ID and Access Key for the MQTT Client.",
+        "default": {
+          "app_id": "",
+          "access_key": ""
+        }
       }
     },
     "inputs": {},
