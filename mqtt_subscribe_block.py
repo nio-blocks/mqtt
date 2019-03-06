@@ -7,7 +7,7 @@ from .mqtt_base_block import MqttBase
 
 class MqttSubscribe(MqttBase, GeneratorBlock):
 
-    version = VersionProperty('0.1.0')
+    version = VersionProperty('0.2.0')
 
     def configure(self, context):
         super().configure(context)
