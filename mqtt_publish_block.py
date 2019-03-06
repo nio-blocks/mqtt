@@ -8,7 +8,10 @@ class MqttPublish(MqttBase, TerminatorBlock):
 
     version = VersionProperty("0.2.0")
     data = Property(
-        title="Data to Publish", default="{{ json.dumps($.to_dict()) }}")
+        title="Data to Publish",
+        default="{{ json.dumps($.to_dict()) }}",
+        order=0,
+    )
 
     def process_signal(self, signal, input_id=None):
         data = self.data(signal)
