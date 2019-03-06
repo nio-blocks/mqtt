@@ -1,3 +1,4 @@
+import json
 from unittest.mock import patch, MagicMock
 import paho.mqtt.client as mqtt
 
@@ -76,8 +77,29 @@ class TestMqtt(NIOBlockTestCase):
             signal_to_publish = [Signal({"test": "testt", "testtt": 1})]
             blk.process_signals(signal_to_publish)
             mock_client.publish.assert_called_once_with(
-                "mqttTopic", signal_to_publish[0].to_dict())
+                "mqttTopic", json.dumps(signal_to_publish[0].to_dict()))
 
             blk.stop()
             mock_client.loop_stop.assert_called_once_with()
             mock_client.disconnect.assert_called_once_with()
+
+    def test_mqtt_publish_custom_data(self):
+        """Block publishes data based on property"""
+        blk = MqttPublish()
+        with patch(MqttBase.__module__ + '.mqtt') as patched_mqtt:
+            mock_client = MagicMock(spec=mqtt.Client)
+            patched_mqtt.Client.return_value = mock_client
+            self.configure_block(blk, {
+                "client_config": {
+                    "client_id": "clientID",
+                    "topic": "mqttTopic",
+                    "host": "testlocalhost",
+                    "port": 0000},
+                "data": "{{ $attr }}"
+            })
+            blk.start()
+
+            signal_to_publish = [Signal({"attr": "value"})]
+            blk.process_signals(signal_to_publish)
+            mock_client.publish.assert_called_once_with("mqttTopic", "value")
+            blk.stop()
