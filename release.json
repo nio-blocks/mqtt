@@ -2,11 +2,11 @@
   "nio/MqttPublish": {
     "language": "Python",
     "url": "git://github.com/nio-blocks/mqtt.git",
-    "version": "0.1.0"
+    "from_python": "mqtt_publish_block.MqttPublish"
   },
   "nio/MqttSubscribe": {
     "language": "Python",
     "url": "git://github.com/nio-blocks/mqtt.git",
-    "version": "0.1.0"
+    "from_python": "mqtt_subscribe_block.MqttSubscribe"
   }
 }

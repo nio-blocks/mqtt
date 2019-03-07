@@ -1,52 +1,12 @@
-MqttPublish
-===========
-Publish messages with the MQTT protocol.
+# MQTT
 
-Properties
-----------
-- **client_config**: Client ID, host, and port for the MQTT Client.
-- **creds**: Application ID and Access Key for the MQTT Client.
+Blocks that interact with an MQTT server
 
-Inputs
-------
-- **default**: List of signals containing the message to be published.
+## Blocks in this collection
 
-Outputs
--------
-None
+ - [MqttPublish](./docs/mqtt_publish.md)
+ - [MqttSubscribe](./docs/mqtt_subscribe.md)
 
-Commands
---------
-None
+## Dependencies
 
-Dependencies
-------------
-paho-mqtt
-
-***
-
-MqttSubscribe
-=============
-Subscribe to messages in an MQTT system.
-
-Properties
-----------
-- **client_config**: Client ID, host, and port for the MQTT Client.
-- **creds**: Application ID and Access Key for the MQTT Client.
-
-Inputs
-------
-None
-
-Outputs
--------
-- **default**: Signal containing the message from MQTT.
-
-Commands
---------
-None
-
-Dependencies
-------------
-paho-mqtt
-
+ - paho-mqtt - `pip install paho-mqtt`

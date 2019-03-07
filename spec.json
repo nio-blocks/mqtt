@@ -1,74 +1,18 @@
 {
   "nio/MqttPublish": {
-    "version": "0.1.0",
     "description": "Publish messages with the MQTT protocol.",
     "categories": [
       "Communication"
     ],
-    "properties": {
-      "client_config": {
-        "title": "MQTT Client Config",
-        "type": "ObjectType",
-        "description": "Client ID, host, and port for the MQTT Client.",
-        "default": {
-          "client_id": "",
-          "port": 1883,
-          "host": "localhost",
-          "topic": ""
-        }
-      },
-      "creds": {
-        "title": "Authorization Creds",
-        "type": "ObjectType",
-        "description": "Application ID and Access Key for the MQTT Client.",
-        "default": {
-          "app_id": "",
-          "access_key": ""
-        }
-      }
-    },
-    "inputs": {
-      "default": {
-        "description": "List of signals containing the message to be published."
-      }
-    },
-    "outputs": {},
-    "commands": {}
+    "from_python": "mqtt_publish_block.MqttPublish",
+    "from_readme": "docs/mqtt_publish.md"
   },
   "nio/MqttSubscribe": {
-    "version": "0.1.0",
     "description": "Subscribe to messages in an MQTT system.",
     "categories": [
       "Communication"
     ],
-    "properties": {
-      "client_config": {
-        "title": "MQTT Client Config",
-        "type": "ObjectType",
-        "description": "Client ID, host, and port for the MQTT Client.",
-        "default": {
-          "client_id": "",
-          "port": 1883,
-          "host": "localhost",
-          "topic": ""
-        }
-      },
-      "creds": {
-        "title": "Authorization Creds",
-        "type": "ObjectType",
-        "description": "Application ID and Access Key for the MQTT Client.",
-        "default": {
-          "app_id": "",
-          "access_key": ""
-        }
-      }
-    },
-    "inputs": {},
-    "outputs": {
-      "default": {
-        "description": "Signal containing the message from MQTT."
-      }
-    },
-    "commands": {}
+    "from_python": "mqtt_subscribe_block.MqttSubscribe",
+    "from_readme": "docs/mqtt_subscribe.md"
   }
 }
